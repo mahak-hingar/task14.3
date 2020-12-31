@@ -1,0 +1,17 @@
+- hosts: all
+  vars_files: 
+        - "{{ansible_facts['distribution']}}_{{ansible_facts['distribution_major_version']}}.yml"
+  tasks: 
+        - package: 
+                name: "{{package}}"
+                state: present
+        - copy: 
+                dest: "/var/www/html"
+                src: mhk.txt
+        - service: 
+                name: "{{service}}"
+                state: started
+        - service: 
+                name: firewalld
+                state: stopped
+
